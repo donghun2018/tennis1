@@ -13,7 +13,7 @@ class entry():
         self.seed = input_array[4]
 
     def __str__(self):
-        return (','.join([self.name1, self.name2, self.school, self.level, self.seed]) + '\n')
+        return (','.join([self.name1, self.name2, self.school, self.level, self.seed]))
 
 
 class input_parser():
