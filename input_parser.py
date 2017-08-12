@@ -15,12 +15,22 @@ class entry():
 		self.school = input_array[2]
 		self.level = input_array[3]
 		self.seed = input_array[4]
+	def __str__(self):
+		return(','.join([self.name1, self.name2, self.school, self.level, self.seed]) + '\n')
 
 for line in input_f.readlines():
 	arr = line.strip().split(',')
 	Z = entry(arr)
 	if Z.school not in entry_dict:
 		entry_dict[Z.school] = {}
-	entry_dict[Z.school][Z.seed] = Z
+	if Z.level not in entry_dict[Z.school]:
+		entry_dict[Z.school][Z.level] = {}
+	entry_dict[Z.school][Z.level][Z.seed] = Z
 
-print(entry_dict)
+for school in entry_dict:
+	print('School: ' + school + '\n')
+	for level in entry_dict[school]:
+		print('Level: ' + level + '\n')
+		for seed in entry_dict[school][level]:
+			print('Seed: ' + seed + '\n')
+			print(entry_dict[school][level][seed])
