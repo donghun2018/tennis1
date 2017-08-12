@@ -1,12 +1,7 @@
 # input_parser.py
 # 08/12/17
 # Takes an input and parses them into a dictionary form
-
 from sys import argv
-
-input_location = argv[1]
-input_f = open(input_location)
-entry_dict = {}
 
 class entry():
 	def __init__(self, input_array):
@@ -18,19 +13,36 @@ class entry():
 	def __str__(self):
 		return(','.join([self.name1, self.name2, self.school, self.level, self.seed]) + '\n')
 
-for line in input_f.readlines():
-	arr = line.strip().split(',')
-	Z = entry(arr)
-	if Z.school not in entry_dict:
-		entry_dict[Z.school] = {}
-	if Z.level not in entry_dict[Z.school]:
-		entry_dict[Z.school][Z.level] = {}
-	entry_dict[Z.school][Z.level][Z.seed] = Z
+class input_parser():
 
-for school in entry_dict:
-	print('School: ' + school + '\n')
-	for level in entry_dict[school]:
-		print('Level: ' + level + '\n')
-		for seed in entry_dict[school][level]:
-			print('Seed: ' + seed + '\n')
-			print(entry_dict[school][level][seed])
+	def __init__(self):
+		self.__entry_dict = {}
+
+	def parse_input(self, file_loc):
+		input_f = open(file_loc)
+		for line in input_f.readlines():
+			arr = line.strip().split(',')
+			Z = entry(arr)
+			if Z.school not in self.__entry_dict:
+				self.__entry_dict[Z.school] = {}
+			if Z.level not in self.__entry_dict[Z.school]:
+				self.__entry_dict[Z.school][Z.level] = {}
+			self.__entry_dict[Z.school][Z.level][Z.seed] = Z
+		return(self.__entry_dict)
+
+	def print_dict(self):
+		# Simple routine for printing all entries
+		for school in self.__entry_dict:
+			print('School: ' + school + '\n')
+			for level in self.__entry_dict[school]:
+				print('Level: ' + level + '\n')
+				for seed in self.__entry_dict[school][level]:
+					print('Seed: ' + seed + '\n')
+					print(self.__entry_dict[school][level][seed])
+
+if __name__ == "__main__":
+	# execute only if run as a script
+	input_location = argv[1]
+	parser = input_parser()
+	parser.parse_input(input_location)
+	parser.print_dict()
